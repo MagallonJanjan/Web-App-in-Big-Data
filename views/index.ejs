@@ -1,0 +1,89 @@
+<%- include('partials/header') %>
+
+<div class="background mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="background-text">
+                <h1 class="display-3 font-weight-bold">Golden State Warriors</h1>
+                <h4 class="pb-4">Strength in Numbers</h4> <br>
+                <a id="player-list" href="#team-roster" class="btn btn-primary p-3 font-weight-bold">UPDATE PLAYER</a>
+                <a href="players/new" class="btn btn-success p-3 font-weight-bold">ADD PLAYER</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" id="team-roster">
+    <div class="row mb-5">
+        <h2 class="font-weight-bold section-title m-auto">PLAYERS</h2>
+    </div>
+    <div class="row">
+        <% player.forEach(function(data){ %>
+            <div class="col-lg-3 col-md-6 mb-4 player">
+                <div class="img-thumbnail p-0 player-img">
+                    <img class="mb-3 img-fluid" src="<%= data.image %>" style="width: 340px; height: 250px">
+                    <div class="mx-3">
+                        <h4 class="player-name "><%= data.name %></h4>
+                        <p class="text-success font-weight-bold"><%= data.position %></p>
+                        <p><%= data.age %> years old</p>
+                    </div>
+                    <div class="mx-3 pb-3">
+                        <form action="/player/<%= data._id %>?_method=DELETE" method="POST">
+                            <a href="/player/<%= data._id %>/update" class="btn btn-primary mr-1">Update</a>
+                            <button class="btn btn-outline-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+<div class="row mb-5">
+    <h2 class="font-weight-bold section-title m-auto">DASHBOARD</h2>
+</div>
+<table class="table table-bordered table-striped" id="table">
+    <thead>
+      <tr class="table-info">
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
+
+<script>
+    $("#player-list").click(function() {
+        if(this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+
+            $("html, body").animate({
+            scrollTop: $(hash).offset().top
+            }, 500, function(){
+                window.location.hash = hash;
+            });
+        }
+    });
+</script>
+
+<%- include('partials/footer') %>
